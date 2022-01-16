@@ -7,21 +7,54 @@ class MemeGenerator extends React.Component{
              topText : "",
              bottomText :"",
              randomImage : "http://i.imgflip.com/1bij.jpg",
-             allMemeImgs : [],
+             allMemesImgs : []
+             
         }
+        this.handleChange = this.handleChange.bind(this)
     }
     componentDidMount(){
-        fetch('https://api.imgflip.com/get_memes')
-        .then(response=>response.json())
-        .then(response=> {
-         const {memes} = response.data
-         this.setState({allMemeImgs:memes})
-         console.log(memes[0])
+       fetch('https://api.imgflip.com/get_memes')
+       .then(response=>response.json())
+       .then(response=>{
+           const {memes} = response.data
+           //Object destructuring 
+           this.setState({
+            allMemesImgs : memes
+           })
+           console.log(memes[0])
+       })
+    }
+    handleChange(event) {
+        const {name,value} = event.target
+        this.setState({
+            [name] : value
         })
     }
     render() {
         return (
-            <h1>API CALL HERE</h1>
+            <div>
+                <form className="meme-form">
+
+                <input type="text" name="topText" placeholder="Top Text" value={this.state.topText} onChange={this.handleChange} />
+                <br/>
+                <input type="text" name="bottomText" placeholder="Bottom Text" onChange={this.handleChange} value={this.state.bottomText} />
+
+
+
+                <button>Generate</button>
+                
+               
+                </form>
+                <div className="meme">
+                    <img src={this.state.randomImage} alt="random" />
+                    <h2 className="top" >{this.state.topText}</h2>
+                    <h2 className="bottom"> {this.state.bottomText}</h2>
+
+                </div>
+
+
+
+            </div>
         )
     }
 }
