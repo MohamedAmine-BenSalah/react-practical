@@ -21,13 +21,21 @@ class MemeGenerator extends React.Component{
            this.setState({
             allMemesImgs : memes
            })
-           console.log(memes[0])
+           
        })
     }
     handleChange(event) {
         const {name,value} = event.target
         this.setState({
             [name] : value
+        })
+    }
+    getRandomImg(event) {
+        event.preventDefault()
+        let randomIndex = Math.floor(Math.random()*this.state.allMemesImgs.length)
+        let newImgUrl = this.state.allMemesImgs[randomIndex].url
+            this.setState({
+            randomImage : newImgUrl
         })
     }
     render() {
@@ -41,7 +49,7 @@ class MemeGenerator extends React.Component{
 
 
 
-                <button>Generate</button>
+                <button onClick={this.getRandomImg.bind(this)} >Generate</button>
                 
                
                 </form>
